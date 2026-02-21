@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import * as cheerio from 'cheerio';
 
-const apiKey = process.env.GEMINI_API_KEY || "AIzaSyDuC2rgpL5Gw0xATtJWnClypFz4O0grU7Q";
+const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 async function test() {
