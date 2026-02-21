@@ -1,74 +1,68 @@
-# VentureScout: VC Startup Discovery Tool
+# 💎 VentureScout: Cinematic VC Intelligence Layer
 
-An AI-powered intelligence layer for venture capital investors to discover, evaluate, and track potential investments.
+VentureScout is an enterprise-grade AI discovery tool designed for high-conviction venture capital investors. It transforms raw digital footprints into structured, strategic intelligence using a cinematic interface and resilient AI synthesis.
 
-## Features
+## 🚀 What VentureScout Offers
 
-- **Strategic Discovery**: Navigate high-growth startups with cinematic filtering and real-time search.
-- **Deep-Scan Intelligence**: Extract proprietary insights directly from raw digital footprints using Gemini 2.5 Flash.
-- **Thematic Pulse**: Organize entities into high-conviction thematic lists with automated signal detection.
-- **Conviction Logic**: AI-generated thesis match scoring with qualitative rationale explanations.
-- **Enterprise-Grade Security**: Server-side API isolation ensuring zero leakage of proprietary keys.
+VentureScout provides a proactive "scout layer" that automates the early stages of the investment funnel:
 
-## Tech Stack
+- **Cinematic Discovery**: Navigate a pipeline of strategic entities with luxury-grade filtering, faceted search, and fluid transitions.
+- **Deep-Scan Agentic Synthesis**: Extract proprietary insights (summary, sector signals, keywords) directly from live websites using **Gemini 2.5 Flash**.
+- **Thematic Intelligence Stacks**: Organize high-conviction startups into vertical-specific portfolios for focused monitoring.
+- **Resilient AI Pipeline**: Features a sophisticated **Mock AI Fallback** that ensures the "Deploy Intelligence" workflow remains 100% functional during live demonstrations, even in low-connectivity or restricted API environments.
+- **Persistence & Portability**: Integrated `localStorage` for zero-setup state persistence and high-fidelity **CSV/JSON exports** for CRM integration.
+- **Enterprise Security**: Secure server-side API architecture that isolates your `GEMINI_API_KEY`, ensuring competitive secrets never leak to the client.
 
-- **Framework**: [Next.js 15+](https://nextjs.org/) (Turbopack Enabled)
-- **AI Core**: [Google Gemini 2.5 Flash](https://aistudio.google.com/) (Next-Gen Intelligence)
-- **Engine**: [Cheerio](https://cheerio.js.org/) for neural-context extraction.
-- **Styling**: Cinematic VC Aesthetic (Custom CSS Glassmorphism).
-- **Architecture**: Secure API Perimeter with In-Memory Caching.
+---
 
-## Key Features
+## 🛠️ Execution Steps (Setup)
 
-- **Live AI Enrichment**: Scrapes real-time website content and extracts structured metadata using Gemini 1.5 Flash.
-- **Explained Match Scoring**: AI generates a score (0-100) and a qualitative explanation based on your specific investment thesis.
-- **Investment Lists**: Organize and manage thematic groups of startups with batch export.
-- **Advanced Discovery**: Faceted filters and multi-column sorting for pipeline navigation.
-- **Secure Architecture**: All AI processing is performed server-side via Next.js API routes, keeping your `GEMINI_API_KEY` safe and private.
-
-## Setup Instructions
+Follow these steps to deploy your own instance of VentureScout:
 
 ### 1. Prerequisites
-- Node.js 18+
-- Google AI Studio API Key ([Get one here](https://aistudio.google.com/app/apikey))
+- **Node.js**: Version 18.0.0 or higher.
+- **Git**: For repository management.
+- **Gemini API Key**: Obtain a free key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
-### 2. Environment Variables
-Create a `.env.local` file in the root directory:
-
-```env
-GEMINI_API_KEY=your_api_key_here
-```
-
-### 3. Installation
+### 2. Installation
+Clone the repository and install dependencies:
 ```bash
+git clone https://github.com/stewin16/venturescout.git
+cd venturescout
 npm install
 ```
 
-### 4. Running Locally
+### 3. Environment Configuration
+Create a `.env` file in the root directory (use `.env.example` as a template):
+```env
+GEMINI_API_KEY=your_actual_key_here
+```
+> [!NOTE]
+> If you do not provide a key, the app will automatically enter **Strategic Mock Mode**, providing high-fidelity intelligence for demonstration purposes.
+
+### 4. Launch Development Node
+Start the Turbo-enabled development server:
 ```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to see the result.
+Navigate to [http://localhost:3000](http://localhost:3000) to begin scouting.
 
-## How Server-Side Enrichment Works
+---
 
-1. **Request**: The frontend initiates a deep-scan via the `/api/enrich` secure node.
-2. **Context Capture**: The engine captures the raw digital footprint of the entity.
-3. **Neural Cleanup**: `Cheerio` isolates high-signal text, stripping noise and metadata.
-4. **Agentic Synthesis**: Cleaned context is fed to **Gemini 2.5 Flash** for multi-dimensional analysis.
-5. **Structured Output**: Intelligence is parsed into a strict proprietary JSON schema.
-6. **Persistence**: Results are cached server-side to ensure zero-latency retrieval for repeated views.
-7. **Intelligence Rendering**: Insights are visualized in a high-fidelity cinematic dashboard.
+## ⚡ Technical Architecture
 
-## Security Explanation
+- **UI Framework**: Next.js 15 (App Router & Turbopack)
+- **AI Core**: Google Gemini 1.5/2.5 Flash SDK
+- **Engine**: Cheerio-powered neural context extraction
+- **Motion**: Framer Motion for cinematic staggered animations
+- **Styles**: Custom CSS Glassmorphism & Tailwind CSS 4
 
-**RESTRICTED API ACCESS**: The `GEMINI_API_KEY` is strictly a server-side environment variable. The frontend never sees this key, and all AI processing happens within Next.js API Routes. This prevents malicious usage or key leakage.
+## 🛡️ Security Protocol
 
-## Deployment for Vercel
+All AI processing is conducted within Next.js Secure API Routes (`/api/enrich`). The application strictly adheres to the **"Zero-Leak" principle**:
+1. No environment variables are exposed to the client.
+2. Web scraping and AI prompting occur exclusively in a server-side isolated environment.
+3. Proprietary data remains within your instance's caching layer.
 
-This project is ready for Vercel out of the box.
-
-1. Push code to GitHub.
-2. Link the repository in the Vercel Dashboard.
-3. Add `GEMINI_API_KEY` to the Environment Variables section in Project Settings.
-4. Deploy!
+---
+*Created for the Venture Capital Scouting Internship Assignment.*
