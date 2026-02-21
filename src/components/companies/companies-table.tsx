@@ -23,11 +23,51 @@ import { useSearchParams } from 'next/navigation';
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuCheckboxItem,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+function GrowthSparkline({ score, color }: { score: number, color: string }) {
+    const points = Array.from({ length: 8 }, (_, i) => ({
+        x: i * 14,
+        y: 20 + Math.sin(i + (score % 10)) * 12 + (score > 80 ? -10 : 0)
+    }));
+    const pathData = `M 0 ${points[0].y} ` + points.map(p => `L ${p.x} ${p.y}`).join(' ');
+
+    return (
+        <div className="flex items-center gap-4 w-32 shrink-0">
+            <svg className="w-20 h-10 overflow-visible">
+                <motion.path
+                    d={pathData}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={{ pathLength: 1, opacity: 1 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className={color}
+                />
+                <motion.circle
+                    cx={points[7].x}
+                    cy={points[7].y}
+                    r="3"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 1.2 }}
+                    className={`fill-current ${color}`}
+                />
+            </svg>
+            <span className={cn("text-[11px] font-black tracking-tighter", color)}>
+                {score}%
+            </span>
+        </div>
+    );
+}
 
 export function CompaniesTable() {
     const searchParams = useSearchParams();
@@ -40,6 +80,7 @@ export function CompaniesTable() {
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const pageSize = 8;
 
     const { saveSearch } = useStorage();
@@ -106,6 +147,31 @@ export function CompaniesTable() {
     );
 
     const totalPages = Math.ceil(sortedCompanies.length / pageSize);
+
+    const toggleSelection = (id: string) => {
+        setSelectedIds(prev => prev.includes(id)
+            ? prev.filter(i => i !== id)
+            : [...prev, id]
+        );
+    };
+
+    const toggleAll = () => {
+        const paginatedIds = paginatedCompanies.map(c => c.id);
+        const allSelected = paginatedIds.every(id => selectedIds.includes(id));
+        if (allSelected) {
+            setSelectedIds(prev => prev.filter(id => !paginatedIds.includes(id)));
+        } else {
+            setSelectedIds(prev => Array.from(new Set([...prev, ...paginatedIds])));
+        }
+    };
+
+    const { lists, addCompanyToList, createListAndAddCompany } = useStorage();
+
+    const handleBatchAdd = (listId: string) => {
+        selectedIds.forEach(id => addCompanyToList(listId, id));
+        toast.success(`Stacked ${selectedIds.length} entities to list`);
+        setSelectedIds([]);
+    };
 
     return (
         <div className="p-4 sm:p-8 lg:p-16 max-w-7xl mx-auto space-y-8 sm:space-y-16">
@@ -192,6 +258,35 @@ export function CompaniesTable() {
                             ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
+
+                    <AnimatePresence>
+                        {selectedIds.length > 0 && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                                animate={{ opacity: 1, scale: 1, x: 0 }}
+                                exit={{ opacity: 0, scale: 0.9, x: 20 }}
+                            >
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button size="lg" className="gap-2.5 h-14 rounded-2xl bg-primary text-white px-8 text-[11px] font-bold uppercase tracking-[0.15em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+                                            Stack {selectedIds.length} Entities <ChevronDown className="w-4 h-4 opacity-70" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="w-72 bg-white border-border shadow-2xl rounded-[1.5rem] p-3 mt-4 overflow-hidden">
+                                        {lists.length === 0 ? (
+                                            <DropdownMenuItem disabled className="text-muted-foreground/40 font-bold text-[10px] uppercase tracking-widest p-5 italic">No Active Stacks</DropdownMenuItem>
+                                        ) : (
+                                            lists.map(list => (
+                                                <DropdownMenuItem key={list.id} onClick={() => handleBatchAdd(list.id)} className="rounded-xl h-14 font-bold text-base tracking-tight cursor-pointer hover:bg-secondary px-5">
+                                                    {list.name}
+                                                </DropdownMenuItem>
+                                            ))
+                                        )}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
 
@@ -200,8 +295,16 @@ export function CompaniesTable() {
                     <Table>
                         <TableHeader>
                             <TableRow className="bg-secondary/5 hover:bg-secondary/5 border-b border-border/40">
-                                <TableHead className="w-[360px] h-20 cursor-pointer hover:text-primary transition-colors font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50" onClick={() => handleSort('name')}>
-                                    <div className="flex items-center gap-2 pl-10">
+                                <TableHead className="w-20 pl-10">
+                                    <input
+                                        type="checkbox"
+                                        className="w-5 h-5 rounded border-border/60 text-primary focus:ring-primary/20 cursor-pointer"
+                                        checked={paginatedCompanies.length > 0 && paginatedCompanies.every(c => selectedIds.includes(c.id))}
+                                        onChange={toggleAll}
+                                    />
+                                </TableHead>
+                                <TableHead className="w-[300px] h-20 cursor-pointer hover:text-primary transition-colors font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50" onClick={() => handleSort('name')}>
+                                    <div className="flex items-center gap-2">
                                         Strategic Entity {sortKey === 'name' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </div>
                                 </TableHead>
@@ -215,7 +318,7 @@ export function CompaniesTable() {
                                         HQ {sortKey === 'location' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </div>
                                 </TableHead>
-                                <TableHead className="h-20 text-center font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">Conviction</TableHead>
+                                <TableHead className="h-20 text-center font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">Strategic Pulse</TableHead>
                                 <TableHead className="h-20 text-right pr-10 font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">Dossier</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -233,9 +336,17 @@ export function CompaniesTable() {
                                             ease: "easeOut"
                                         }}
                                         key={company.id}
-                                        className="group hover:bg-primary/[0.01] transition-all duration-500 border-b border-border/40 last:border-0 hover:translate-x-1 active:scale-[0.99] cursor-pointer"
+                                        className="group hover:bg-primary/[0.01] transition-all duration-500 border-b border-border/40 last:border-0 hover:translate-x-1 active:scale-[0.99]"
                                     >
-                                        <TableCell className="py-10 pl-10">
+                                        <TableCell className="pl-10">
+                                            <input
+                                                type="checkbox"
+                                                className="w-5 h-5 rounded border-border/60 text-primary focus:ring-primary/20 cursor-pointer"
+                                                checked={selectedIds.includes(company.id)}
+                                                onChange={() => toggleSelection(company.id)}
+                                            />
+                                        </TableCell>
+                                        <TableCell className="py-10">
                                             <Link href={`/companies/${company.id}`} className="flex items-center gap-6">
                                                 <div className="w-14 h-14 rounded-2xl bg-secondary/30 flex items-center justify-center font-extrabold text-xl text-primary border border-border/50 transition-all group-hover:bg-primary group-hover:text-white group-hover:border-primary group-hover:shadow-lg group-hover:shadow-primary/20">
                                                     {company.name[0]}
@@ -260,16 +371,11 @@ export function CompaniesTable() {
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <div className="flex flex-col items-center gap-4 w-32 mx-auto">
-                                                <div className="w-full h-1.5 bg-secondary/40 rounded-full overflow-hidden">
-                                                    <div
-                                                        className="h-full bg-primary/60 group-hover:bg-primary transition-all duration-500"
-                                                        style={{ width: `${60 + (parseInt(company.id) * 3) % 40}%` }}
-                                                    ></div>
-                                                </div>
-                                                <span className="text-[10px] font-bold text-primary/60 tracking-[0.2em] uppercase">
-                                                    {60 + (parseInt(company.id) * 3) % 40}% Match
-                                                </span>
+                                            <div className="flex justify-center">
+                                                <GrowthSparkline
+                                                    score={60 + (parseInt(company.id) * 3) % 38}
+                                                    color={((60 + (parseInt(company.id) * 3) % 38) >= 85) ? "text-emerald-500" : "text-primary/60"}
+                                                />
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-right pr-10">

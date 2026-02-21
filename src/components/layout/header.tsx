@@ -52,12 +52,16 @@ export function Header() {
                 <div className="relative group flex-1">
                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/60 transition-colors group-focus-within:text-primary" />
                     <Input
-                        placeholder="Search entities or pipelines..."
-                        className="pl-12 bg-secondary/20 border-border hover:bg-secondary/40 focus-visible:ring-primary/20 h-11 rounded-2xl transition-all text-sm font-medium"
+                        placeholder="Search or press Cmd+K..."
+                        className="pl-12 pr-12 bg-secondary/20 border-border hover:bg-secondary/40 focus-visible:ring-primary/20 h-11 rounded-2xl transition-all text-sm font-medium"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={handleSearch}
                     />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-1 opacity-40 group-focus-within:opacity-0 transition-opacity">
+                        <kbd className="h-5 px-1.5 rounded border border-border bg-white font-mono text-[9px] font-bold">⌘</kbd>
+                        <kbd className="h-5 px-1.5 rounded border border-border bg-white font-mono text-[9px] font-bold">K</kbd>
+                    </div>
                 </div>
             </div>
 

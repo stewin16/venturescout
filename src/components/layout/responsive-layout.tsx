@@ -3,6 +3,7 @@
 import { useState, createContext, useContext } from 'react';
 import { Sidebar } from './sidebar';
 import { Header } from './header';
+import { CommandCenter } from './command-center';
 
 const NavContext = createContext<{
     isOpen: boolean;
@@ -43,6 +44,7 @@ export function ResponsiveLayout({ children }: { children: React.ReactNode }) {
                 {/* Main Content */}
                 <div className="flex-1 flex flex-col min-w-0 relative z-10">
                     <Header />
+                    <CommandCenter />
                     <main className="flex-1 overflow-y-auto scrollbar-hide">
                         {children}
                     </main>

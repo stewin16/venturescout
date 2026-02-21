@@ -30,6 +30,59 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
+function RadialGauge({ score }: { score: number }) {
+    const radius = 60;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (score / 100) * circumference;
+
+    const getColor = (s: number) => {
+        if (s >= 80) return 'text-emerald-500';
+        if (s >= 60) return 'text-amber-500';
+        return 'text-rose-500';
+    };
+
+    const getBgColor = (s: number) => {
+        if (s >= 80) return 'bg-emerald-50';
+        if (s >= 60) return 'bg-amber-50';
+        return 'bg-rose-50';
+    };
+
+    return (
+        <div className={`relative flex flex-col justify-center items-center text-center p-8 rounded-[3rem] h-64 w-full shadow-2xl shadow-black/[0.02] border border-border/40 ${getBgColor(score)} group overflow-hidden`}>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent" />
+            <svg className="w-32 h-32 -rotate-90 relative z-10">
+                <circle
+                    cx="64"
+                    cy="64"
+                    r={radius}
+                    stroke="currentColor"
+                    strokeWidth="12"
+                    fill="transparent"
+                    className="text-black/[0.03]"
+                />
+                <motion.circle
+                    cx="64"
+                    cy="64"
+                    r={radius}
+                    stroke="currentColor"
+                    strokeWidth="12"
+                    strokeDasharray={circumference}
+                    initial={{ strokeDashoffset: circumference }}
+                    animate={{ strokeDashoffset: offset }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                    fill="transparent"
+                    strokeLinecap="round"
+                    className={getColor(score)}
+                />
+            </svg>
+            <div className="absolute flex flex-col items-center justify-center pt-2">
+                <span className={`text-4xl font-black tracking-tighter ${getColor(score)}`}>{score}<span className="text-xl opacity-40">%</span></span>
+            </div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground/40 mt-6 relative z-10 italic">Thesis Alignment</p>
+        </div>
+    );
+}
+
 export function CompanyProfile({ company }: { company: Company }) {
     const {
         notes,
@@ -288,18 +341,9 @@ export function CompanyProfile({ company }: { company: Company }) {
                                                     </p>
                                                 </div>
 
-                                                <Card className="border-none ring-1 ring-emerald-100/60 bg-emerald-50/30 flex flex-col justify-center items-center text-center p-10 rounded-[2.5rem] relative overflow-hidden h-56 shadow-lg shadow-emerald-500/[0.02] group">
-                                                    <CardDescription className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-600/40 mb-4 relative z-10 italic">Thesis Match</CardDescription>
-                                                    <CardTitle className="text-7xl font-extrabold tracking-tighter text-emerald-700/80 relative z-10 group-hover:scale-110 transition-transform duration-500">
-                                                        {enrichment.thesis_match_score}<span className="text-3xl opacity-40">%</span>
-                                                    </CardTitle>
-                                                    <div className="w-full bg-emerald-200/30 rounded-full h-1.5 mt-8 relative z-10 max-w-[100px] overflow-hidden">
-                                                        <div
-                                                            className="bg-emerald-500/60 h-full rounded-full"
-                                                            style={{ width: `${enrichment.thesis_match_score}%` }}
-                                                        />
-                                                    </div>
-                                                </Card>
+                                                <div className="md:col-span-1">
+                                                    <RadialGauge score={enrichment.thesis_match_score} />
+                                                </div>
                                             </div>
 
                                             <div className="space-y-8">
