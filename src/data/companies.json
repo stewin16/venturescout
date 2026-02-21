@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "name": "OpenAI",
+    "website": "https://openai.com",
+    "category": "Artificial Intelligence",
+    "location": "San Francisco, CA",
+    "description": "OpenAI is an AI research and deployment company. Our mission is to ensure that artificial general intelligence benefits all of humanity."
+  },
+  {
+    "id": "2",
+    "name": "Stripe",
+    "website": "https://stripe.com",
+    "category": "Fintech",
+    "location": "San Francisco, CA",
+    "description": "Financial infrastructure for the internet. Millions of companies of all sizes use Stripe online and in person to accept payments, send payouts, and manage their businesses."
+  },
+  {
+    "id": "3",
+    "name": "Vercel",
+    "website": "https://vercel.com",
+    "category": "DevTools",
+    "location": "San Francisco, CA",
+    "description": "Vercel is the platform for frontend developers, providing the speed and reliability innovators need to create at the moment of inspiration."
+  },
+  {
+    "id": "4",
+    "name": "Figma",
+    "website": "https://figma.com",
+    "category": "Design",
+    "location": "San Francisco, CA",
+    "description": "Figma is the leading collaborative design tool for teams who build products together."
+  },
+  {
+    "id": "5",
+    "name": "Canva",
+    "website": "https://canva.com",
+    "category": "Design",
+    "location": "Sydney, Australia",
+    "description": "Canva is a free-to-use online graphic design tool. Use it to create social media posts, presentations, posters, videos, logos and more."
+  },
+  {
+    "id": "6",
+    "name": "Rippling",
+    "website": "https://rippling.com",
+    "category": "HR Tech",
+    "location": "San Francisco, CA",
+    "description": "Rippling gives businesses one place to run HR, IT, and Finance—all in a single system."
+  },
+  {
+    "id": "7",
+    "name": "Ramp",
+    "website": "https://ramp.com",
+    "category": "Fintech",
+    "location": "New York, NY",
+    "description": "Ramp is the ultimate platform for modern finance teams. From corporate cards and expense management to bill pay and accounting integrations."
+  },
+  {
+    "id": "8",
+    "name": "Perplexity",
+    "website": "https://perplexity.ai",
+    "category": "Artificial Intelligence",
+    "location": "San Francisco, CA",
+    "description": "Perplexity is a conversational search engine that delivers accurate, cited answers to any question."
+  },
+  {
+    "id": "9",
+    "name": "Anthropic",
+    "website": "https://anthropic.com",
+    "category": "Artificial Intelligence",
+    "location": "San Francisco, CA",
+    "description": "Anthropic is an AI safety and research company that builds reliable, interpretable, and steerable AI systems."
+  },
+  {
+    "id": "10",
+    "name": "Deel",
+    "website": "https://deel.com",
+    "category": "HR Tech",
+    "location": "San Francisco, CA",
+    "description": "Deel is the all-in-one HR platform for global teams that helps companies hire, manage, and pay anyone, anywhere."
+  }
+]
