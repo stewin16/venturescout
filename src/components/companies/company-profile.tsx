@@ -254,7 +254,7 @@ export function CompanyProfile({ company }: { company: Company }) {
                                     <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/20 italic">
                                         Executive Summary
                                     </h3>
-                                    <p className="text-3xl font-bold leading-tight text-foreground/80 tracking-tight italic">
+                                    <p className="text-2xl font-bold leading-relaxed text-foreground/90 tracking-tight">
                                         {company.description}
                                     </p>
                                 </div>
@@ -279,18 +279,18 @@ export function CompanyProfile({ company }: { company: Company }) {
                                     <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/20 italic">
                                         Entity Telemetry
                                     </h3>
-                                    <div className="space-y-10">
-                                        <div className="space-y-2">
-                                            <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em]">HQ Location</p>
-                                            <p className="font-extrabold text-lg text-foreground/80">{company.location}</p>
+                                    <div className="space-y-6">
+                                        <div className="space-y-1.5">
+                                            <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em] leading-none">HQ Location</p>
+                                            <p className="font-bold text-lg text-foreground/90 tracking-tight">{company.location}</p>
                                         </div>
-                                        <div className="space-y-2">
-                                            <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em]">Primary Sector</p>
-                                            <p className="font-extrabold text-lg text-foreground/80">{company.category}</p>
+                                        <div className="space-y-1.5">
+                                            <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em] leading-none">Primary Sector</p>
+                                            <p className="font-bold text-lg text-foreground/90 tracking-tight">{company.category}</p>
                                         </div>
-                                        <div className="space-y-2">
-                                            <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em]">Discovery Meta</p>
-                                            <p className="font-extrabold text-lg text-foreground/80">Feb 2026</p>
+                                        <div className="space-y-1.5">
+                                            <p className="text-[10px] font-bold text-primary/40 uppercase tracking-[0.2em] leading-none">Discovery Meta</p>
+                                            <p className="font-bold text-lg text-foreground/90 tracking-tight">Feb 2026</p>
                                         </div>
                                     </div>
                                 </Card>
@@ -336,7 +336,7 @@ export function CompanyProfile({ company }: { company: Company }) {
                                                         AI Synthesis Engine
                                                         <div className="h-px flex-1 bg-border/40" />
                                                     </h3>
-                                                    <p className="text-2xl font-bold leading-relaxed text-foreground/80 tracking-tight italic">
+                                                    <p className="text-xl font-bold leading-relaxed text-foreground/90 tracking-tight">
                                                         {enrichment.summary}
                                                     </p>
                                                 </div>

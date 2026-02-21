@@ -32,17 +32,20 @@ export default function SavedSearchesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {savedSearches.length === 0 ? (
                     <div className="col-span-full">
-                        <div className="border-2 border-dashed border-border/80 p-24 rounded-[3rem] text-center bg-secondary/[0.02]">
-                            <div className="w-24 h-24 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-10">
-                                <Search className="w-12 h-12 text-muted-foreground" />
+                        <div className="relative overflow-hidden p-24 rounded-[3rem] text-center bg-white border border-border shadow-2xl shadow-primary/[0.02]">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/[0.03] blur-[100px] rounded-full" />
+                            <div className="relative z-10">
+                                <div className="w-24 h-24 rounded-[2rem] bg-secondary/30 flex items-center justify-center mx-auto mb-10">
+                                    <Search className="w-10 h-10 text-primary/40" />
+                                </div>
+                                <h3 className="text-4xl font-extrabold tracking-tighter mb-4 text-foreground/90">No Intelligence Anchors</h3>
+                                <p className="text-muted-foreground/60 max-w-sm mx-auto mb-12 font-medium text-lg leading-relaxed">
+                                    Curate your complex discovery pipelines and anchor them for instant market monitoring.
+                                </p>
+                                <Button asChild className="h-16 rounded-[1.5rem] px-16 font-bold uppercase text-[12px] tracking-[0.2em] bg-primary text-white shadow-2xl shadow-primary/30 transition-all hover:scale-105 active:scale-95">
+                                    <Link href="/companies">Initialize Search</Link>
+                                </Button>
                             </div>
-                            <h3 className="text-3xl font-bold tracking-tight mb-4">No Intel Saved</h3>
-                            <p className="text-muted-foreground max-w-sm mx-auto mb-12 font-medium text-lg leading-relaxed">
-                                Curate your complex discovery pipelines and save them for instant market monitoring.
-                            </p>
-                            <Button asChild className="h-14 rounded-2xl px-12 font-bold uppercase text-[10px] tracking-widest bg-primary text-white shadow-xl shadow-primary/20">
-                                <Link href="/companies">Initialize Search</Link>
-                            </Button>
                         </div>
                     </div>
                 ) : (

@@ -318,7 +318,7 @@ export function CompaniesTable() {
                                         HQ {sortKey === 'location' && (sortOrder === 'asc' ? '↑' : '↓')}
                                     </div>
                                 </TableHead>
-                                <TableHead className="h-20 text-center font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">Strategic Pulse</TableHead>
+                                <TableHead className="h-20 text-center font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50 min-w-[150px]">Strategic Pulse</TableHead>
                                 <TableHead className="h-20 text-right pr-10 font-bold text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">Dossier</TableHead>
                             </TableRow>
                         </TableHeader>

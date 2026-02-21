@@ -93,15 +93,18 @@ export default function ListsPage() {
 
             <div className="grid grid-cols-1 gap-16">
                 {lists.length === 0 ? (
-                    <div className="border-2 border-dashed border-border/80 p-24 rounded-[3rem] text-center bg-secondary/[0.02]">
-                        <div className="w-24 h-24 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-10">
-                            <ListTodo className="w-12 h-12 text-muted-foreground" />
+                    <div className="relative overflow-hidden p-24 rounded-[3rem] text-center bg-white border border-border shadow-2xl shadow-primary/[0.02]">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/[0.03] blur-[100px] rounded-full" />
+                        <div className="relative z-10">
+                            <div className="w-24 h-24 rounded-[2rem] bg-secondary/30 flex items-center justify-center mx-auto mb-10 group-hover:rotate-12 transition-transform duration-700">
+                                <ListTodo className="w-12 h-12 text-primary/40" />
+                            </div>
+                            <h3 className="text-4xl font-extrabold tracking-tighter mb-4 text-foreground/90">Awaiting Conviction</h3>
+                            <p className="text-muted-foreground/60 max-w-sm mx-auto mb-12 font-medium text-lg leading-relaxed">
+                                You haven't initialized any intelligence stacks. Start curating high-conviction startups to begin tracking.
+                            </p>
+                            <Button onClick={handleCreateList} className="h-16 rounded-[1.5rem] px-16 font-bold uppercase text-[12px] tracking-[0.2em] bg-primary text-white shadow-2xl shadow-primary/30 transition-all hover:scale-105 active:scale-95">Initialize First Stack</Button>
                         </div>
-                        <h3 className="text-3xl font-bold tracking-tight mb-4">No Stacks Found</h3>
-                        <p className="text-muted-foreground max-w-sm mx-auto mb-12 font-medium text-lg leading-relaxed">
-                            Organize your high-conviction startups into thematic intelligence portfolios to start tracking.
-                        </p>
-                        <Button onClick={handleCreateList} className="h-14 rounded-2xl px-12 font-bold uppercase text-[10px] tracking-widest bg-primary text-white shadow-xl shadow-primary/20">Create Portfolio</Button>
                     </div>
                 ) : (
                     lists.map(list => {
